@@ -27,12 +27,8 @@ class StoreService {
         await viewInDb.save();
 
       } else {
-        const data = {
-          id: event.id,
-          amount: event.amount,
-          currency: event.currency
-        };
-        await new BidViewModel(data).save();
+        const view = this.reducers.reduce((view, reducer) => reducer(event, view), {});
+        await new BidViewModel(view).save();
       }
     }
 

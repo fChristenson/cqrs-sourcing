@@ -24,8 +24,11 @@ const run = async () => {
     bidEvents = await BidEventModel.find({});
   }
 
-  console.log("New events found: ", bidEvents.length);
-  console.log("--------------------------");
+  for (const event of bidEvents) {
+    //TODO: send to queue
+    console.log("Event sent: ", event.id);
+    console.log("--------------------------");
+  }
 
   const lastEvent = bidEvents[bidEvents.length - 1];
 
@@ -37,8 +40,8 @@ const run = async () => {
   }
 };
 
-setInterval(() => {
+setInterval(async () => {
   console.log("Running dispatch");
   console.log("--------------------------");
-  run();
+  await run();
 }, 5_000)

@@ -24,6 +24,9 @@ const run = async () => {
     bidEvents = await BidEventModel.find({});
   }
 
+  console.log("New events found: ", bidEvents.length);
+  console.log("--------------------------");
+
   for (const event of bidEvents) {
     //TODO: send to queue
     console.log("Event sent: ", event.id);

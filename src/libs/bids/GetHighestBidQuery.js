@@ -1,8 +1,8 @@
-const BidModel = require("./BidModel");
+const storeService = require("../store");
 
 class GetHighestBidQuery {
   run() {
-    return BidModel.findOne({}).sort({ createdAt: "desc" });
+    return storeService.getHighestBidView();
   }
 }
 

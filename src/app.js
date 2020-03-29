@@ -6,14 +6,16 @@ app.use(express.json());
 
 app.get("/api/v1/bids", async (req, res) => {
   const q = new GetHighestBidQuery();
+  console.log("Getting highest bid");
+  console.log("--------------------------");
   const bid = await queryService.runQuery(q);
   res.json(bid);
 });
 
 app.post("/api/v1/bids", (req, res) => {
-  const bid = { amount: req.body.number, currency: "SEK" };
+  const bid = { amount: parseFloat(req.body.number), currency: "SEK" };
   const c = new CreateBidCommand(bid);
-  // We want to allow for maximum throughput so we don't wait for the write to happen.
+  // We want to allow maximum throughput so we don't wait for the write to happen before returning a response.
   wait(2000, () => {
     console.log("Placing bid", bid);
     console.log("--------------------------");

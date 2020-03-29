@@ -1,4 +1,6 @@
-const BidModel = require("./BidModel");
+const storeService = require("../store");
+const uuid = require("node-uuid");
+const { CreateBid } = require("../bids/events");
 
 class CreateBidCommand {
   constructor(bid) {
@@ -6,7 +8,10 @@ class CreateBidCommand {
   }
 
   run() {
-    return new BidModel({ bid: this.bid }).save();
+    const id = uuid.v4();
+    const event = CreateBid(id, this.bid);
+    const events = [event];
+    return storeService.store(events)
   }
 }
 

@@ -1,6 +1,11 @@
 version: "3"
 
 services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management      
+    ports: 
+      - "8082:15672"
   nginx:
     container_name: nginx
     image: nginx
@@ -11,18 +16,42 @@ services:
     depends_on: 
       - place-bids
       - get-bids
+  dispatcher:
+    container_name: dispatcher
+    build: .
+    command: 
+      - "node"
+      - "src/app.dispatcher.js"
+    environment: 
+      - MQ_URI=amqp://rabbitmq
+      - MONGO_URI=mongodb://db:27017
+    depends_on: 
+      - db
+      - rabbitmq
+  admin:
+    container_name: admin
+    build: .
+    command: 
+      - "node"
+      - "server.admin.js"
+    environment: 
+      - MQ_URI=amqp://rabbitmq
+      - MONGO_URI=mongodb://db:27017
+    depends_on: 
+      - db
+      - rabbitmq
   place-bids:
     container_name: placebids
     build: .
     environment: 
-      - MONGO_URI="mongodb://db:27017"
+      - MONGO_URI=mongodb://db:27017
     depends_on: 
       - db
   get-bids:
     container_name:  getbids
     build: .
     environment: 
-      - MONGO_URI="mongodb://db:27017"
+      - MONGO_URI=mongodb://db:27017
     depends_on: 
       - db
   db:

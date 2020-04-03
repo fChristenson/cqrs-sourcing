@@ -3,7 +3,7 @@
 ## What we will cover
 
 - What is CQRS and when can it be useful?
-- What is event sourcing and how can it help in a MicroService architecture?
+- What is Event sourcing and how can it help in a MicroService architecture?
 
 ## Notes
 

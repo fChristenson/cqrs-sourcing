@@ -7,6 +7,10 @@
 
 ## Notes
 
+Question:
+
+>Thanks a log sharing his video was very useful. Can you make some video implementing CQRS, Event sourcing and RabbitMQ with microservices please. I read a lot of DDD CQRS, but never seen some real project example?
+
 CQRS (Command Query Responsibility Segregation) is a application architecture.
 CQRS is best used in situations when you have a disproportionate amount of read and writes.
 
